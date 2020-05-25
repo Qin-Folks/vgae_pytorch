@@ -8,6 +8,7 @@ Their preprocessing source was used as-is.
 import numpy as np
 import scipy.sparse as sp
 
+
 def sparse_to_tuple(sparse_mx):
     if not sp.isspmatrix_coo(sparse_mx):
         sparse_mx = sparse_mx.tocoo()
@@ -16,6 +17,7 @@ def sparse_to_tuple(sparse_mx):
     shape = sparse_mx.shape
     return coords, values, shape
 
+
 def preprocess_graph(adj):
     adj = sp.coo_matrix(adj)
     adj_ = adj + sp.eye(adj.shape[0])
@@ -23,6 +25,7 @@ def preprocess_graph(adj):
     degree_mat_inv_sqrt = sp.diags(np.power(rowsum, -0.5).flatten())
     adj_normalized = adj_.dot(degree_mat_inv_sqrt).transpose().dot(degree_mat_inv_sqrt).tocoo()
     return sparse_to_tuple(adj_normalized)
+
 
 def mask_test_edges(adj):
     # Function to build test set with 10% positive links
